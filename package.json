@@ -10,13 +10,20 @@
     "name": "Arvind Satyanarayan",
     "url": "http://arvindsatya.com"
   },
-  "contributors": [{
-    "name": "Jeffrey Heer",
-    "url": "http://idl.cs.washington.edu"
-  }],
+  "contributors": [
+    {
+      "name": "Jeffrey Heer",
+      "url": "http://idl.cs.washington.edu"
+    },
+    {
+      "name": "Dominik Moritz",
+      "url": "http://www.domoritz.de"
+    }
+  ],
   "license": "BSD-3-Clause",
   "dependencies": {
     "datalib": "^1.4.5",
+    "socket.io-client": "^1.4.4",
     "vega-logging": "^1.0"
   },
   "devDependencies": {
@@ -36,6 +43,5 @@
     "build": "browserify src/index.js -d -s vg.dataflow -o vega-dataflow.js",
     "postbuild": "uglifyjs vega-dataflow.js -cm > vega-dataflow.min.js"
   },
-  "browserify-shim": {
-  }
+  "browserify-shim": {}
 }
