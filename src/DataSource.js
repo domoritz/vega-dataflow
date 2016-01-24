@@ -2,9 +2,7 @@ var dl = require('datalib'),
     log = require('vega-logging'),
     ChangeSet = require('./ChangeSet'),
     Collector = require('./Collector'),
-    Tuple = require('./Tuple'),
-    Node = require('./Node'),
-    Loader = require('./Loader'); // jshint ignore:line
+    Tuple = require('./Tuple'); // jshint ignore:line
 
 function DataSource(graph, name, facet) {
   this._graph = graph;
@@ -98,8 +96,6 @@ prototype.pipeline = function(pipeline) {
 
   var graph = this._graph,
       status;
-
-  pipeline.unshift(this._loader = new Loader(this));
 
   pipeline.unshift(this._inputNode = DataSourceInput(this));
   status = graph.preprocess(pipeline);

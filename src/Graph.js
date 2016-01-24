@@ -2,7 +2,6 @@ var dl = require('datalib'),
     log = require('vega-logging'),
     Heap = require('./Heap'),
     ChangeSet = require('./ChangeSet'),
-    DataSource = require('./DataSource'),
     Collector = require('./Collector'),
     Tuple = require('./Tuple'),
     Signal = require('./Signal'),
@@ -54,18 +53,7 @@ prototype.signalValues = function(names) {
   return this.values(Deps.SIGNALS, names);
 };
 
-prototype.data = function(name, pipeline, facet) {
-  var db = this._data;
-  if (!arguments.length) {
-    var all = [], key;
-    for (key in db) { all.push(db[key]); }
-    return all;
-  } else if (arguments.length === 1) {
-    return db[name];
-  } else {
-    return (db[name] = new DataSource(this, name, facet).pipeline(pipeline));
-  }
-};
+require('./DataMrg.js')(prototype);
 
 prototype.signal = function(name, init) {
   if (arguments.length === 1) {
@@ -114,6 +102,9 @@ prototype.buildIndexes = function() {
       ri[d][f] = null;
     }
   }
+
+  // TODO: rename buildIndexes
+  this.setupDataMgr();
 
   return this;
 };
