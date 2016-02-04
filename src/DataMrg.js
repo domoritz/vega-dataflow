@@ -13,10 +13,24 @@ module.exports = function(graphProto) {
       this._socket.emit('query', value);
     });
 
-    this._socket.on('set', function (data) {
+    this._socket.on('values', function (data) {
       var ds = this._data[data.dataset];
       ds.values(data.values);
       ds.fire();
+    }, this);
+
+    this._socket.on('insert', function (data) {
+      var ds = this._data[data.dataset];
+      ds.insert(data.values);
+      ds.fire();
+    }, this);
+
+    this._socket.on('remove', function () {
+      // TODO
+    }, this);
+
+    this._socket.on('update', function () {
+      // TODO
     }, this);
   };
 
