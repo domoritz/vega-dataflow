@@ -11,17 +11,30 @@ module.exports = function(graphProto) {
   graphProto.setupDataMgr = function() {
     var self = this;
 
-    this.signal(QUERY).on(function(name, value) {
-      socket.emit('query', value);
+    // connect all signals to the socket
+    Object.keys(this._signals).forEach(function(name) {
+      var signal = self.signal(name);
+      signal.on(function(name, value) {
+        socket.emit('signal', {
+          name: name,
+          value: value
+        });
+      });
+
+      // send initial values to socket
+      socket.emit('signal', {
+        name: name,
+        value: signal.value()
+      });
     });
 
-    socket.on('values', function (data) {
+    socket.on('values', function(data) {
       var ds = self._data[data.dataset];
       ds.values(data.values);
       ds.fire();
     });
 
-    socket.on('insert', function (data) {
+    socket.on('insert', function(data) {
       var ds = self._data[data.dataset];
       ds.insert(data.values);
       ds.fire();
