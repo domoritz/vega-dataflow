@@ -2,6 +2,7 @@ var dl = require('datalib'),
     log = require('vega-logging'),
     Heap = require('./Heap'),
     ChangeSet = require('./ChangeSet'),
+    DataSource = require('./DataSource.js'),
     Collector = require('./Collector'),
     Tuple = require('./Tuple'),
     Signal = require('./Signal'),
@@ -103,7 +104,6 @@ prototype.buildIndexes = function() {
     }
   }
 
-  // TODO: rename buildIndexes
   this.setupDataMgr();
 
   return this;

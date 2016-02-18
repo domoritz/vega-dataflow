@@ -2,7 +2,8 @@ var dl = require('datalib'),
     log = require('vega-logging'),
     ChangeSet = require('./ChangeSet'),
     Collector = require('./Collector'),
-    Tuple = require('./Tuple'); // jshint ignore:line
+    Tuple = require('./Tuple'),
+    Node = require('./Node'); // jshint ignore:line
 
 function DataSource(graph, name, facet) {
   this._graph = graph;

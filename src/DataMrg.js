@@ -6,32 +6,34 @@ var SOCKET = 'http://localhost:8080';
 
 module.exports = function(graphProto) {
   // set up socket connection
-  this._socket = io.connect(SOCKET);
+  var socket = io.connect(SOCKET);
 
   graphProto.setupDataMgr = function() {
+    var self = this;
+
     this.signal(QUERY).on(function(name, value) {
-      this._socket.emit('query', value);
+      socket.emit('query', value);
     });
 
-    this._socket.on('values', function (data) {
-      var ds = this._data[data.dataset];
+    socket.on('values', function (data) {
+      var ds = self._data[data.dataset];
       ds.values(data.values);
       ds.fire();
-    }, this);
+    });
 
-    this._socket.on('insert', function (data) {
-      var ds = this._data[data.dataset];
+    socket.on('insert', function (data) {
+      var ds = self._data[data.dataset];
       ds.insert(data.values);
       ds.fire();
-    }, this);
+    });
 
-    this._socket.on('remove', function () {
+    socket.on('remove', function () {
       // TODO
-    }, this);
+    });
 
-    this._socket.on('update', function () {
+    socket.on('update', function () {
       // TODO
-    }, this);
+    });
   };
 
   graphProto.data = function(name, pipeline, facet) {
