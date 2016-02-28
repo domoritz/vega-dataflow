@@ -4,6 +4,21 @@ var DataSource = require('./DataSource'),
 var QUERY = 'query';
 var SOCKET = 'http://localhost:8080';
 
+function column2row(data) {
+  var fields = Object.keys(data);
+  var values = [];
+  for (var i = 0; i < fields.length; i++) {
+    var field = fields[i];
+    while (values.length < data[field].length) {
+      values.push({});
+    }
+    for (var j = 0; j < data[field].length; j++) {
+      values[j][field] = data[field][j];
+    }
+  }
+  return values;
+}
+
 module.exports = function(graphProto) {
   // set up socket connection
   var socket = io.connect(SOCKET);
@@ -30,7 +45,7 @@ module.exports = function(graphProto) {
 
     socket.on('values', function(data) {
       var ds = self._data[data.dataset];
-      ds.values(data.values);
+      ds.values(column2row(data.values));
       ds.fire();
     });
 
